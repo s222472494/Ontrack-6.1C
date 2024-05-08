@@ -25,22 +25,21 @@ pipeline {
                 echo 'Performing security scan through ESET Endpoint Security'
                 echo 'Security scan is underway'
             }
+
+            post {
+                success {
+                    mail to: "kyle.shailen3@gmail.com",
+                        subject: "Security Scan Email",
+                        body: "The security scan has been passed and the build is all good to continue."
+                }
+                failure {
+                    mail to: "kyle.shailen3@gmail.com",
+                        subject: "Security Scan Email",
+                        body: "The security scan has failed, hence we need to go back and reconfigure."
+                }
+            }
         }
 
-         post {
-        success {
-            mail to: "kyle.shailen3@gmail.com",
-                subject: "Security Scan Email",
-                body: "The security scan has been passed and the build is all good to continue."
-                
-        }
-        failure {
-            mail to: "kyle.shailen3@gmail.com",
-                subject: "Security Scan Email",
-                body: "The security scan has failed, hence we need to go back and reconfigure."
-        }
-
-             
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying the application to staging server: Github-Jenkins Testplane '
@@ -56,20 +55,18 @@ pipeline {
                 echo 'Deploying the application to production server: Github-Jenkins  '
             }
         }
-    }
-        
 
-    post {
-        success {
-            mail to: "kyle.shailen3@gmail.com",
-                subject: "Build Status Email",
-                body: "The build was successful, the logs are attached below:"
-                
-        }
-        failure {
-            mail to: "kyle.shailen3@gmail.com",
-                subject: "Build Status Email",
-                body: "The build has unfortunetly failed"
+        post {
+            success {
+                mail to: "kyle.shailen3@gmail.com",
+                    subject: "Build Status Email",
+                    body: "The build was successful, the logs are attached below:"
+            }
+            failure {
+                mail to: "kyle.shailen3@gmail.com",
+                    subject: "Build Status Email",
+                    body: "The build has unfortunately failed"
+            }
         }
     }
 }
