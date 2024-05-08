@@ -25,7 +25,6 @@ pipeline {
                 echo 'Performing security scan through ESET Endpoint Security'
                 echo 'Security scan is underway'
             }
-
             post {
                 success {
                     mail to: "kyle.shailen3@gmail.com",
@@ -39,7 +38,6 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying the application to staging server: Github-Jenkins Testplane '
@@ -55,18 +53,19 @@ pipeline {
                 echo 'Deploying the application to production server: Github-Jenkins  '
             }
         }
+    }
 
-        post {
-            success {
-                mail to: "kyle.shailen3@gmail.com",
-                    subject: "Build Status Email",
-                    body: "The build was successful, the logs are attached below:"
-            }
-            failure {
-                mail to: "kyle.shailen3@gmail.com",
-                    subject: "Build Status Email",
-                    body: "The build has unfortunately failed"
-            }
+    post {
+        success {
+            mail to: "kyle.shailen3@gmail.com",
+                subject: "Build Status Email",
+                body: "The build was successful, the logs are attached below:"
+        }
+        failure {
+            mail to: "kyle.shailen3@gmail.com",
+                subject: "Build Status Email",
+                body: "The build has unfortunately failed"
         }
     }
 }
+
