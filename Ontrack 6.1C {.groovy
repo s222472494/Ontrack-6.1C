@@ -26,6 +26,21 @@ pipeline {
                 echo 'Security scan is underway'
             }
         }
+
+         post {
+        success {
+            mail to: "kyle.shailen3@gmail.com",
+                subject: "Security Scan Email",
+                body: "The security scan has been passed and the build is all good to continue."
+                
+        }
+        failure {
+            mail to: "kyle.shailen3@gmail.com",
+                subject: "Security Scan Email",
+                body: "The security scan has failed, hence we need to go back and reconfigure."
+        }
+
+             
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying the application to staging server: Github-Jenkins Testplane '
@@ -42,19 +57,19 @@ pipeline {
             }
         }
     }
+        
 
     post {
         success {
-            emailext subject: "Pipeline Status: SUCCESS",
-                      body: "The pipeline finished successfully.",
-                      to: "kyle.shailen3@gmail.com",
-                      attachmentsPattern: "**/*"
+            mail to: "kyle.shailen3@gmail.com",
+                subject: "Build Status Email",
+                body: "The build was successful, the logs are attached below:"
+                
         }
         failure {
-            emailext subject: "Pipeline Status: FAILURE",
-                      body: "The pipeline finished with failure.",
-                      to: "kyle.shailen3@gmail.com",
-                      attachmentsPattern: "**/*"
+            mail to: "kyle.shailen3@gmail.com",
+                subject: "Build Status Email",
+                body: "The build has unfortunetly failed"
         }
     }
 }
