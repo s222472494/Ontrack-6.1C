@@ -15,9 +15,9 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo 'Analysing the code through the following code analysis tools: SonarQube, CodeClimate, Synk Code'
-                echo 'SonarQube'
-                echo 'CodeClimate'
-                echo 'Synk Code'
+                echo 'SonarQube running'
+                echo 'CodeClimate running'
+                echo 'Synk Code running'
             }
         }
         stage('Security Scan') {
@@ -47,13 +47,13 @@ pipeline {
         success {
             emailext subject: "Pipeline Status: SUCCESS",
                       body: "The pipeline finished successfully.",
-                      to: "s222472494@deakin.edu.au",
+                      to: "kyle.shailen3@gmail.com",
                       attachmentsPattern: "**/*"
         }
         failure {
             emailext subject: "Pipeline Status: FAILURE",
                       body: "The pipeline finished with failure.",
-                      to: "s222472494@deakin.edu.au",
+                      to: "kyle.shailen3@gmail.com",
                       attachmentsPattern: "**/*"
         }
     }
